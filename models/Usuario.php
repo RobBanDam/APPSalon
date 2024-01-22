@@ -53,6 +53,19 @@ class Usuario extends ActiveRecord{
         return self::$alertas;
     }
 
+    //  Validar credenciales de acceso
+    public function validarLogin(){
+        if(!$this->email){
+            self::$alertas['error'][] = "El E-Mail es Obligatorio";
+        }
+
+        if(!$this->password){
+            self::$alertas['error'][] = "La Contraseña es Obligatoria";
+        }
+
+        return self::$alertas;
+    }
+
     //  Verificar si el usuario ya existe en la base de datos
     public function existeUsuario(){
         $query = " SELECT * FROM " . self::$tabla . " WHERE email = '" . $this->email . "' LIMIT 1";
@@ -79,6 +92,17 @@ class Usuario extends ActiveRecord{
     //  Crear token único
     public function crearToken(){
         $this->token = uniqid();
+    }
+
+    //  Comprobar contraseña y Verificado
+    public function comprobarPasswordAndVerificado($password){
+        $resultado = password_verify($password, $this->password);
+
+        if(!$resultado || !$this->confirmado){
+            self::$alertas['error'][] = "Contraseña Incorrecta o Cuenta no Confirmada";
+        }else{
+            return true;
+        }
     }
 }
 
