@@ -66,6 +66,24 @@ class Usuario extends ActiveRecord{
         return self::$alertas;
     }
 
+    //  Se usa para recuperar la contraseña cuando se pierde, pero primero debe de validar correo
+    public function validarEmail(){
+        if(!$this->email){
+            self::$alertas['error'][] = "El E-Mail es Obligatorio";
+        }
+        return self::$alertas;
+    }
+
+    public function validarPassword(){
+        if(!$this->password){
+            self::$alertas['error'][] = "La contraseña es Obligatoria";
+        }
+        if(strlen($this->password) < 6){
+            self::$alertas['error'][] = "La contraseña debe tener al menos 6 caracteres";
+        }
+        return self::$alertas;
+    }
+
     //  Verificar si el usuario ya existe en la base de datos
     public function existeUsuario(){
         $query = " SELECT * FROM " . self::$tabla . " WHERE email = '" . $this->email . "' LIMIT 1";
