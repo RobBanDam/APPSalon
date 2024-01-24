@@ -12,3 +12,9 @@ function s($html) : string {
     $s = htmlspecialchars($html);
     return $s;
 }
+
+function iniciarSession() {
+    if(!isset($_SESSION)){
+        session_start();
+    }  
+}
