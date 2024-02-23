@@ -13,7 +13,7 @@ function s($html) : string {
     return $s;
 }
 
-function iniciarSession() {
+function iniciarSession() : void {
     if(!isset($_SESSION)){
         session_start();
     }  
