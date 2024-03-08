@@ -13,6 +13,13 @@ function s($html) : string {
     return $s;
 }
 
+function esUltimo(string $actual, string $proximo): bool{
+    if($actual !== $proximo){
+        return true;
+    }
+    return false;
+}
+
 function iniciarSession() : void {
     if(!isset($_SESSION)){
         session_start();
@@ -25,5 +32,11 @@ function isAuth() : void {
         session_start();
     } elseif(!isset($_SESSION['login'])) {
         header('Location: /');
+    }
+}
+
+function isAdmin() : void {
+    if(!isset($_SESSION['admin'])){
+        header("location: /");
     }
 }
